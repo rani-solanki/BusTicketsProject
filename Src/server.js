@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const {dbConnect} = require('../config/configRagister');
 const router = require('./Router/ragisterRouter');
 const Joi = require('joi')
-const validator = require('express-joi-validation').createValidator({})
- 
+const validator = require('express-joi-validation').createValidator({}) 
+
 // const Test = require('./tests/tickets.test');
 // const apiRoutes = require('./Models/tickets.js');
 

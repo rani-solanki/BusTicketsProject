@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Bus = require('../Models/Bus.js');
 const passenger = require('../Models/passenger.js');
 
@@ -11,12 +10,12 @@ var TicketSchema = mongoose.Schema({
     "TicketsCost" :   { type : Number, required : true },
 
     passenger: {type: mongoose.Schema.Types.ObjectId, ref: 'passenger' },
-    products: {type : mongoose.Schema.Types.ObjectId, ref: 'Bus' }
-
-})
-
+    busInformation : {type : mongoose.Schema.Types.ObjectId, ref: 'Bus' },
+});
 
 module.exports = mongoose.model('tickets', TicketSchema)
+
+
 
 
 

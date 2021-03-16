@@ -1,12 +1,10 @@
 const app = require("./server.js");
 const supertest = require("supertest");
 const request = supertest(app);
-// const http = require('http').createServer(app).listen(3000);
 
 beforeAll(() => {
   jest.useFakeTimers()
 })
-
 
 app.get("/test", async (req, res) => {
   res.json({ message: "pass!" });
@@ -35,21 +33,4 @@ afterAll(done => {
   done()
 })
 
-// endpoints for get all database ;
-
-app.post("/signup", async (req, res) => {
-  const { seatNumber, status} = req.body;
-  const user = new User({ seatNumber, status });
-  const ret = await user.save();
-  res.json(ret);
-});
-
-
-it("Should save user to database", async done => {
-  const res = await request.post("/signup").send({
-    seatNumber: 1,
-    status : "open"
-  });
-  done();
-});
 
