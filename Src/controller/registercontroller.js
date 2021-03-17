@@ -1,7 +1,6 @@
 const TicketSchema = require('../Models/tickets');
 
 registerUser = (seatsNumber,status,date,Time,TicketsCost,res)=>{
-
     user =  new TicketSchema({
         seatsNumber : seatsNumber,
         status : status,

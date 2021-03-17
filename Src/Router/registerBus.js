@@ -26,7 +26,6 @@ router.get('/bus', async(req, res)=>{
             res.status(404).json(err)
         })
 })
-
 // confirm the book the bus
 router.put('bus/:busId',async(req,res)=>{
     const { bus_id } = req.params
@@ -40,3 +39,4 @@ router.put('bus/:busId',async(req,res)=>{
     }
 })
 module.exports = router
+
