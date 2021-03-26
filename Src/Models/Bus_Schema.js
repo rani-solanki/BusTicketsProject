@@ -1,19 +1,20 @@
-const Joi = require('joi'); 
-const mongoose = require('mongoose');
-const { post } = require('../Router/registerBus');
+// const Joi = require('joi'); 
+// const mongoose = require('mongoose');
 
-const BusSchema = Joi.object().keys({ 
+// // const JoiBuschema = Joi.object().keys({ 
 
-    seatNUmber : joi.number().min(1).required(true),
-    BusNUmber : Joi.string().min(2).max(6).required(),
-    BusName: Joi.string().min(3).max(20).required(true),
-    arribleTime : joi.default().required(true),
-    arribleDate : joi.default().required(true),
-    departureTime : joi.default().required(true),
-    departureDate : joi.default().min().max().required(true),
+//   BusId: { type: mongoose.Schema.Types.ObjectId },
+//   seatNUmber : Joi.number().min(1).required(true),
+//   BusNUmber : Joi.string().min(2).max(6).required(true),
+//   BusName: Joi.string().min(3).max(20).required(true),
+//   arribleTime : Joi.date().required(true),
+//   arribleDate : Joi.date().required(true),
+//   departureTime : Joi.date().required(true),
+//   departureDate : Joi.date().min().max().required(true),
 
-  });
+// });
+
+// module.exports = mongoose.model('Bus', JoiBuschema);
+
   
-  module.exports = mongoose.model('Bus', BusSchema);
-
  

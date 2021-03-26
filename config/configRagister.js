@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const url = 'mongodb://localhost:27017/express-mongo-app'
 
-const dbConnect = ()=>{
+const dbConnect = async ()=>{
     mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -14,5 +14,7 @@ const dbConnect = ()=>{
     })
 }
 module.exports = {dbConnect};
+
+
 
 

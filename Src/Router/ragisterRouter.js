@@ -1,5 +1,6 @@
 var router = require('express').Router();
-const { registerUser,getUser } = require('../controller/registercontroller');
+const { response } = require('express');
+const { registerUser,getUser} = require('../controller/registercontroller');
 
 // create get api
 router.get('/users',async(request,response)=>{
@@ -18,6 +19,7 @@ router.post('/register',(req,res)=>{
         registerUser(seatsNumber,status,date,Time,TicketsCost,res);
 })
 module.exports = router;
+
 
 
 

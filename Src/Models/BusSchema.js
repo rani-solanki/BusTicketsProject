@@ -1,8 +1,9 @@
+const { string } = require("joi");
 const mongoose = require("mongoose");
 
-var BusSchema = mongoose.Schema({
-    
+var BusSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
+    "seatNumber" : {type : string,required : true},
     "BusNumber" :{type : String, required:true},
     "BusName" : {type : String, required:true},
     "arribleTime" :{type : Date, default:Date.now,required:true},
