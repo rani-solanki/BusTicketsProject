@@ -4,12 +4,22 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "check": "^1.0.0",
     "config": "^3.3.6",
     "express-joi-validation": "^5.0.0",
     "express-middleware": "^3.4.2",
+    "express-validator": "^6.10.0",
+    "gravatar": "^1.8.1",
     "jest": "^26.6.3",
     "joi": "^17.4.0",
-    "nodemon": "^2.0.7"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose-unique-validator": "^2.0.3",
+    "nodemon": "^2.0.7",
+    "save": "^2.4.0",
+    "test": "^0.6.0"
   },
   "devDependencies": {
     "supertest": "^6.1.3"
