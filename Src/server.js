@@ -16,6 +16,12 @@ app.use(authAPI)
 const bus = require('./Router/bus')
 app.use(bus)
 
+const ticket = require("./Router/tickets")
+app.use(ticket)
+
+const createTickets = require("./Router/createTicket.js")
+app.use(createTickets)
+
 app.listen(3000,()=>{  
     console.log("listening on this 3000 port")
 })

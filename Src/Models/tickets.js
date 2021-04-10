@@ -3,7 +3,7 @@ const bus = require('../Models/Bus.js');
 const User = require('../Models/user.js');
 
 var TicketSchema = mongoose.Schema({
-    "seatsNumber" : {
+    "seatNo" : {
         type : Number,
         required : true,
         unic : true
@@ -17,16 +17,16 @@ var TicketSchema = mongoose.Schema({
         required : true,
     },
     
-    User : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required : true
+    userId:{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref:'User',
+        require:true,
     },
-    bus:{
-        type : mongoose.Schema.Types.ObjectId,
-        ref: 'bus',
-        required : true
-    },
+    busId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'bus',
+        require:true,
+    }
 })
 
 ticket = mongoose.model('tickets', TicketSchema)

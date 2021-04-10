@@ -28,7 +28,6 @@ router.post('/user', validation, async(req,res)=>{
         if (user){
             res.status(404).send({ "error":"user already exit"})
         }
-
         user = new User({
             name,
             gender,

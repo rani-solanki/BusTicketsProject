@@ -12,6 +12,11 @@ var BusSchema = new mongoose.Schema({
         unique:true,
         required:true
     },
+    "nomOfseats" : {
+        type : Number,
+        unique : true,
+        required : true
+    },
     "startCity" :{
         type : String,
         required : true
