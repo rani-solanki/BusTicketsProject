@@ -1,3 +1,4 @@
+const { object, required } = require("joi");
 const mongoose = require("mongoose");
 // const uniqueValidator = require('mongoose-unique-validator');
 
@@ -14,7 +15,6 @@ var BusSchema = new mongoose.Schema({
     },
     "nomOfseats" : {
         type : Number,
-        unique : true,
         required : true
     },
     "startCity" :{

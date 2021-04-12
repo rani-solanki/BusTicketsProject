@@ -23,7 +23,7 @@ router.post('/Bus', validation, async(req,res)=>{
         const{BusNumber,BusName,nomOfseats,
             startCity,endCity,arribleTimes,
             arribleDate,departureDate } = req.body;
-
+            
             bus = new Bus({
                 BusNumber,
                 BusName,
