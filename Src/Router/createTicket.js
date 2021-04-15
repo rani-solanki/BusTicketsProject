@@ -1,4 +1,4 @@
-    const auth = require('../middleware/auth.js')
+const auth = require('../middleware/auth.js')
 const router = require('express').Router();
 const Ticket = require('../Models/tickets.js')
 const Bus= require('../Models/Bus.js')
@@ -14,12 +14,12 @@ router.put('/Ticket/:busId',auth,[
     ],async(req,res)=>{
         try{
             const errors =validationResult(req);
-            
+
             if(!errors.isEmpty()){
                 return res.status(400).json({errors: errors});
             }
 
-            const user = await User.findById(req.user.id)
+            const user = await User.find({ })
             const userId = user._id
 
             const busId = req.params.busId
@@ -29,13 +29,13 @@ router.put('/Ticket/:busId',auth,[
             if (!bus){
                 return res.status(404).send.json({message:errors})
             }
-
-            const seat = await Ticket.findOne({seatNo})
             
+            const seat = await Ticket.findOne({busId, seatNo})
+
             if (!seat){
-                res.send({message :"this seat is not available in the this bus"})
+                res.send({message :"this seat or bus is not available in the this tickets dbs"})
             }else{
-                const ticketInfo = await Ticket.findOne({seatNo,isBooked : true})
+                const ticketInfo = await Ticket.findOne({busId, seatNo,isBooked : true})
                 console.log(ticketInfo)
 
             if (ticketInfo){
@@ -47,13 +47,15 @@ router.put('/Ticket/:busId',auth,[
                     isBooked,
                     userId
                 }
-                if(user){            
-                    const data = await Ticket.updateOne({seatNo},{$set:UpdateData})
+                if(user){   
+
+                    const data = await Ticket.updateOne({busId, seatNo},{$set:UpdateData})
                     console.log(data)
 
-                    const bookedticket= await Ticket.find({busId,seatNo}).populate('busId',[]).populate('userId',['name','phoneNo','email'])
+                    const bookedticket = await Ticket.find({busId,seatNo}).populate('busId',[]).populate('userId',['name','email'])
+                    console.log("book the ticket",bookedticket)
                     return res.status(200).json({msg:"Bookedticket",bookedticket})
-
+                
                 }else{
                     res.send("user is not in dbs please enter the valid token")
                 }
@@ -62,7 +64,7 @@ router.put('/Ticket/:busId',auth,[
     }
     catch(err){
         console.error("message", err)
-        res.status(404).send.json({ err})
+        res.status(404).send().json({ err})
     }
 })
 
@@ -74,7 +76,7 @@ router.get('/close/:busId', async(req, res) => {
            return res.status(404).json({msg:"Bus not exist"})   
        }
        else{
-            const Tickets = await Ticket.find({isBooked:true})
+            const Tickets = await Ticket.find({busId,isBooked:true})
             return res.status(200).json({msg:"List of all closed tickets",Tickets})
        }      
     }
@@ -92,7 +94,7 @@ router.get('/open/:busId', async(req, res) => {
            return res.status(404).json({msg:"Bus not exist"})   
        }
        else{
-            const tickets = await Ticket.find({isBooked:false})
+            const tickets = await Ticket.find({busId,isBooked:false})
             return res.status(200).json({msg:"List of all closed tickets",tickets})
        }      
     }
@@ -129,33 +131,35 @@ router.get('/ticket/:busId/:ticketId',async(req,res)=>{
 })
 
 //View Details of person owning the ticket.
-router.get('/detail/:busId/:ticketId',auth,async(req,res)=>{
+router.get('/detail/:busId/:_id',auth,async(req,res)=>{
     try{
         const busId = req.params.busId
-        const  ticketId  = req.params.ticketId
+        const  _id  = req.params._id
         const busNo= await Bus.findById(busId)
-
         if(!busNo){
             return res.status(404).json('bus not exist')
         }
+        
+        const tickets = await Ticket.find({busId})
+
+        if(tickets.length===0){
+            return res.status(404).json({msg:'Enter the valid BusId'})
+        }
         const user = await User.findById(req.user.id)
         const userid = user._id
-        let userdata = await User.findById(userid)
-        console.log(userdata)
+        let userdata= await User.findById(userid)
 
         if(!userdata){
             return res.status(404).json('usre not exist')
         }
-
-        const ticket =await Ticket.findById(ticketId)
+        const ticket =await Ticket.findById(_id)
         const userId = ticket.userId
-        console.log(userId)
-        if(userId.toString() === userid.toString()){
-
-            const ticketDetail= await Ticket.findById(ticketId).populate("userId",[ ])
+        if(userId.toString()===userid.toString())
+        {
+            const ticketDetail = await Ticket.find({userId}).populate('userId',[]);
             console.log(ticketDetail)
-            return res.status(200).json(userdata,{msg:ticketDetail})
 
+            return res.status(200).json({msg:"Deatali of person owning the ticket",ticketDetail})
         }else{
             return res.status(404).json("Enter the valid token")
         }
@@ -164,6 +168,6 @@ router.get('/detail/:busId/:ticketId',auth,async(req,res)=>{
         console.log(err)
         res.status(404).send("server error")        
     }
-})
+}),
 
 module.exports = router;

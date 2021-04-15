@@ -47,6 +47,11 @@ var BusSchema = new mongoose.Schema({
         default : Date.now,
         required:true
     },
+    isAdmin: {
+        type: Boolean,
+        required:true,
+        default: false
+    }
 })
 
 Bus = mongoose.model('bus', BusSchema)

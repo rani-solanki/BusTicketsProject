@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 var UserSchema = mongoose.Schema({
 
     name: {
@@ -24,6 +23,11 @@ var UserSchema = mongoose.Schema({
         type:String,
         unique : true,
         required:true
+    },
+    isAdmin: {
+        type: Boolean,
+        required:true,
+        default: false
     }
 })
 

@@ -10,7 +10,8 @@ const validation = [check (
     check("gender","gender is required").not().isEmpty(),
     check("Address","addres is required ").not().isEmpty(),
     check('email','please inclde unique and valid email').isEmail(),
-    check('passward','please enter the sward passward').isLength({min:6})
+    check('passward','please enter the sward passward').isLength({min:6}),
+    check('isAdmin', 'please enter the isAdmin').not()
 ]
 
 // user or admin signin
@@ -19,12 +20,12 @@ router.post('/user', validation, async(req,res)=>{
     if (!error.isEmpty()){
         res.status(400).json({error : error.array()})
     }
-    
-    const{ name,gender, Address,email,passward } = req.body;
+
+    const{ name,gender, Address,email,passward,isAdmin} = req.body;
     try{
         let user = await User.findOne({email});
         console.log(req.body)
-                
+
         if (user){
             res.status(404).send({ "error":"user already exit"})
         }
@@ -33,9 +34,10 @@ router.post('/user', validation, async(req,res)=>{
             gender,
             Address,
             email,
-            passward
+            passward,
+            isAdmin
         })
-        
+
         const salt = await bcrypt.genSalt(10);
         user.passward = await bcrypt.hash(passward,salt)
         await user.save();
@@ -50,7 +52,9 @@ router.post('/user', validation, async(req,res)=>{
                 if(err)throw err;
                 res.json({token});
             });
-        await user.save();    
+        userInfo = await user.save();  
+        console.log(userInfo) 
+        
         res.send("user rgisered")
     }
     catch(err){
@@ -59,4 +63,5 @@ router.post('/user', validation, async(req,res)=>{
     }
 })
 module.exports = router;
+
 

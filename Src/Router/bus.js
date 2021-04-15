@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const { check, validationResult } = require('express-validator');
 const Bus = require('../Models/Bus');
+const auth = require('../middleware/auth.js')
+const User = require('../Models/user');
 
 const validation = [check (
     "BusNumber","bus number is required is required").not().isEmpty(),
@@ -14,16 +16,20 @@ const validation = [check (
     check("departureDate","please enter the departerDate").not().isEmpty(),
 ]
 
-router.post('/Bus', validation, async(req,res)=>{
+router.post('/Bus', validation,auth,async(req,res)=>{
     try{
         const error = validationResult(req)
         if (!error.isEmpty()){
             res.status(400).json({error : error.array()})
         }
-        const{BusNumber,BusName,nomOfseats,
-            startCity,endCity,arribleTimes,
+        const{BusNumber,BusName,nomOfseats,startCity,endCity,arribleTimes,
             arribleDate,departureDate } = req.body;
-            
+
+        const user = await User.findById(req.user.id)
+
+        let isAdmin = user.isAdmin
+        
+        if(isAdmin===true){
             bus = new Bus({
                 BusNumber,
                 BusName,
@@ -35,14 +41,19 @@ router.post('/Bus', validation, async(req,res)=>{
                 // departureTime,
                 departureDate
             })
-            await bus.save();    
-            res.send("bus booked")          
+            const busId=bus.id
+            console.log(busId)
+
+            await bus.save(); 
+            res.send("bus booked")
+        }          
     }
     catch(err){
         console.error("err.message")
         res.status(500).send("error")
     }
 })
+
 // view the bus information 
 router.get('/bus', async(req, res)=>{
     try{
