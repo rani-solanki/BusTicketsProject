@@ -13,6 +13,7 @@ function validateObj(obj, schema) {
     })
     return result
 }
+
 function userValidation(user) {
     const userSchema = Joi.object().keys({
    

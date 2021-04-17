@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bus = require('../Models/Bus.js');
 const User = require('../Models/user.js');
+const uniqueValidator = require('mongoose-unique-validator');
+
 
 var TicketSchema = mongoose.Schema({
     "seatNo" : {
@@ -16,7 +18,6 @@ var TicketSchema = mongoose.Schema({
         type : Number,
         required : true,
     },
-    
     userId:{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref:'User',
@@ -27,7 +28,16 @@ var TicketSchema = mongoose.Schema({
         ref:'bus',
         require:true,
     }
-})
+},
+{
+    timestamps: true
+});
+
+TicketSchema.plugin(uniqueValidator, {
+    type: 'mongoose-unique-validator',
+    message: 'Error, expected {PATH} to be unique.'
+});
+
 
 ticket = mongoose.model('tickets', TicketSchema)
 module.exports = ticket

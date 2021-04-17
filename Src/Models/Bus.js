@@ -1,6 +1,6 @@
 const { object, required } = require("joi");
 const mongoose = require("mongoose");
-// const uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 var BusSchema = new mongoose.Schema({
     "BusNumber" :{
@@ -21,12 +21,14 @@ var BusSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-
     "endCity" :{
         type : String,
         required : true
     },
-
+    "description":{
+        type : String,
+        required : true
+    },
     "arribleTime" :{
         type : Date,
         default:Date.now,
@@ -37,11 +39,12 @@ var BusSchema = new mongoose.Schema({
         default:Date.now,
         required:true
     },
-    // "departureTime":{
-    //     type : Date,
-    //     default:Date.now,
-    //     required:true
-    // },    
+    "departureTime":{
+        type : Date,
+        default:Date.now,
+        required:true
+    },
+
     "departureDate" :{
         type : Date,
         default : Date.now,
@@ -52,7 +55,15 @@ var BusSchema = new mongoose.Schema({
         required:true,
         default: false
     }
-})
+},
+{
+    timestamps: true
+});
+
+BusSchema.plugin(uniqueValidator, {
+    type: 'mongoose-unique-validator',
+    message: 'Error, expected {PATH} to be unique.'
+});
 
 Bus = mongoose.model('bus', BusSchema)
 module.exports = Bus

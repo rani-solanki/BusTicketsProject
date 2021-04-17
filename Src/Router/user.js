@@ -20,7 +20,7 @@ router.post('/user', validation, async(req,res)=>{
     if (!error.isEmpty()){
         res.status(400).json({error : error.array()})
     }
-
+    
     const{ name,gender, Address,email,passward,isAdmin} = req.body;
     try{
         let user = await User.findOne({email});
