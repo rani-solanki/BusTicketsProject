@@ -139,14 +139,13 @@ router.get('/detail/:busId/:_id',auth,async(req,res)=>{
 
         const user = await User.findById(req.user.id)
         const userid = user._id
-
         let userdata= await User.findById(userid)
+
         if(!userdata){
             return res.status(404).json('usre not exist')
         }
-        
-        const ticket =await Ticket.findById(_id)
 
+        const ticket =await Ticket.findById(_id)
         const userId = ticket.userId
         if(userId.toString()===userid.toString())
         {
