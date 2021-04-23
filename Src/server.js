@@ -19,8 +19,8 @@ app.use(bus)
 const ticket = require("./Router/tickets")
 app.use(ticket)
 
-const createTickets = require("./Router/createTicket.js")
-app.use(createTickets)
+const bookTickets = require("./Router/bookTicket.js")
+app.use(bookTickets)
 
 app.listen(3000,()=>{  
     console.log("listening on this 3000 port")

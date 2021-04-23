@@ -10,7 +10,6 @@ var BusSchema = new mongoose.Schema({
     },
     "BusName" : {
         type : String,
-        unique:true,
         required:true
     },
     "nomOfseats" : {
@@ -49,11 +48,6 @@ var BusSchema = new mongoose.Schema({
         type : Date,
         default : Date.now,
         required:true
-    },
-    isAdmin: {
-        type: Boolean,
-        required:true,
-        default: false
     }
 },
 {

@@ -3,6 +3,7 @@ const Bus = require('../Models/Bus');
 const auth = require('../middleware/auth.js')
 const User = require('../Models/user');
 const { build } = require('joi');
+
 const validation=require("../validation/busValidation.js")
 const busValidation = validation.busValidation
 
@@ -12,7 +13,9 @@ router.post('/Bus',auth,async(req,res)=>{
     if (!result) return res.status(400).json({data})
     try{ 
         const user=await User.findById(req.user.id)
-        let isAdmin=user.isAdmin
+        let isAdmin = user.isAdmin
+        console.log(isAdmin)
+
         if(isAdmin===true){ 
             const bus =new Bus(req.body)
             const newbus =await bus.save()
@@ -24,14 +27,14 @@ router.post('/Bus',auth,async(req,res)=>{
         }
         else{
             return res.status(400).json({msg:"enter the valid admin token"})
-        }  
+        } 
     }
+    
     catch(err) {
-        console.log(err)
         return res.status(401).send({"error":"Bus number has to be unique"})
-
     }     
 })
+
 
 // view the bus information 
 router.get('/Bus/:busId', async(req, res)=>{
