@@ -17,8 +17,7 @@ function validateObj(obj, schema) {
 function userValidation(user) {
     const userSchema = Joi.object().keys({
    
-    firstName : Joi.string().required(true),
-    lastName:Joi.string().optional(),
+    name:Joi.string().optional().required(true),
     gender:Joi.string().required(true),
     Address: Joi.string().required(true),
     phoneNumber:Joi.number().min(10),
