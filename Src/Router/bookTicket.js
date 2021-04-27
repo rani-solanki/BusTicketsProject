@@ -94,20 +94,14 @@ router.put('/Ticket/:busId',auth,[
 
                         const ticketUpdations = {seatNo:seats[k],isBooked:newUser.passenger[k].isBooked,userId,passenger}
                         await Ticket.updateOne({busId,seatNo:seats[k]},{$set:ticketUpdations})
-                        
+
                     }
-                    const data1 = asyncCall()
-                    tickets.push(data1)
-                    // const bookedticket= await Ticket.findOne({busId,seatNo:seats[k]}).populate('busId',[])
+                    
+                    const bookedticket= await Ticket.findOne({busId,seatNo:seats[k]}).populate('busId',[])
+                    tickets.push(bookedticket)
                     
                 }
                 return res.status(200).json({msg:"Bookedticket",tickets})
-
-                async function asyncCall( ) {
-                    const bookedticket = await Ticket.findOne({busId,seatNo:seats[k]}).populate('busId',[])
-                    return bookedticket
-                }
-                  
         }
         else {
             res.send("please enter the user valid token")
