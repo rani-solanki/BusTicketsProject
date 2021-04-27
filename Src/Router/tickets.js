@@ -17,7 +17,7 @@ router.post('/ticket/:busId' ,[
 
         const  busId  = req.params.busId
         let Bus = await bus.findById(busId)
-
+ 
         if (!Bus){
             return res.json({"message":"bus is not exit"})
         }

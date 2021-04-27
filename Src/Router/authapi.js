@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/configRagister');
 
 // verify the token is valid or not  and getting the back user information
-
 router.get('/auth',auth,async(req,res) =>{
     try{
         const user = await User.findById(req.user.id)
